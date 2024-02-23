@@ -6,8 +6,8 @@
 *.tfstate.*
 
 # lock file
-*.*.lock.hcl
-**/.*.*.lock.hcl
+*.lock.hcl
+**/.*.lock.hcl
 
 # Crash log files
 crash.log
