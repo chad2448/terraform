@@ -9,7 +9,6 @@ terraform {
 
 provider "proxmox" {
   pm_api_url = "https://192.168.1.2:8006/api2/json"
-  pm_log_enable = true
   pm_debug = true
   pm_user = var.pm_user
   pm_password = var.pm_password
