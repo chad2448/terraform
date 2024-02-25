@@ -20,15 +20,21 @@ resource "proxmox_lxc" "debian" {
     hostname = "tf-test"
     ostemplate = "local:vztmpl/debian-12-standard_12.2-1_amd64.tar.zst"
     password = var.container_pass
+    start        = true
+    tags         = "terraform"
     unprivileged = true
     ssh_public_keys = <<-EOT
      ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDLC/aJpuicQOTSBXaFnUuzZwgC3DP8qByO9SdItZrMz3LNh1jKtvSQE0OHYhJTxWf0xJtziZV1BlvOn+TIH4eXXytxNZNZbhv6TybHNa+M7PAPEW6QXlkPUyzqhjvGdoklbNQ49HIKEflMIPx1UCxM8fYifnXGnTVzcIVgjMowu2puIL1WN/RFmpWWROqJXddZcWQvaNaNznCcyjDzrJqrKGE1WBEcmV0e2PRmW+0QDG4JyFCfurIcZhnRFD4LA02yLub9aXLeWmQ8VJRFPv/TnvmF8D89ElwagfNAkCIM0q36biueJxTNQYXjKem9dVMCmHZn4fXhiQ4ojGK/k3aHeUrUPl27ahnW/T3YcM9japdNPDt5s4UMHzNTaulEo5OTNEthOXEK+6TM2PC250Va1ljoxXXRjUs5lDs/qTRdJpn9Leb84q/SJ6E3ZCWDfNqyirQRdhWgErWf6bLd/kFnES4nvLK64MShn/Hrbq9sxVZSBsduEf3+PBUhakW0Vk8= chad@OfficePC
   EOT
 
+
+
   network {
     name   = "eth0"
     bridge = "vmbr0"
-    ip     = "dhcp"
+    # ip     = "dhcp"
+    ip     = "192.168.1.238/24"
+    tag    = 5
   }
   rootfs {
     storage = "local-lvm"
