@@ -10,4 +10,6 @@ variable "pm_api_url" {
     type = string
 }
 
-variable "container_pass" {}
+variable "container_pass" {
+    type = string
+}
