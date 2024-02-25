@@ -25,8 +25,8 @@ resource "proxmox_lxc" "debian" {
     unprivileged    = true
     nameserver      = "192.168.1.1"
     ssh_public_keys = <<-EOT
-     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDLC/aJpuicQOTSBXaFnUuzZwgC3DP8qByO9SdItZrMz3LNh1jKtvSQE0OHYhJTxWf0xJtziZV1BlvOn+TIH4eXXytxNZNZbhv6TybHNa+M7PAPEW6QXlkPUyzqhjvGdoklbNQ49HIKEflMIPx1UCxM8fYifnXGnTVzcIVgjMowu2puIL1WN/RFmpWWROqJXddZcWQvaNaNznCcyjDzrJqrKGE1WBEcmV0e2PRmW+0QDG4JyFCfurIcZhnRFD4LA02yLub9aXLeWmQ8VJRFPv/TnvmF8D89ElwagfNAkCIM0q36biueJxTNQYXjKem9dVMCmHZn4fXhiQ4ojGK/k3aHeUrUPl27ahnW/T3YcM9japdNPDt5s4UMHzNTaulEo5OTNEthOXEK+6TM2PC250Va1ljoxXXRjUs5lDs/qTRdJpn9Leb84q/SJ6E3ZCWDfNqyirQRdhWgErWf6bLd/kFnES4nvLK64MShn/Hrbq9sxVZSBsduEf3+PBUhakW0Vk8= chad@OfficePC
-  EOT
+    ssh-rsa some-keys-hash
+    EOT
 
   network {
     name   = "eth0"
