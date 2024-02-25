@@ -18,7 +18,7 @@ provider "proxmox" {
 resource "proxmox_lxc" "debian" {
     target_node = "promox"
     hostname = "tf-test"
-    ostemplate = "local:vztmpl/debian-12-standard_12.2-1_amd64.tar.zst"
+    ostemplate = "ProxmoxNFS:vztmpl/debian-12-standard_12.2-1_amd64.tar.zst"
     password = var.container_pass
     start        = true
     tags         = "terraform"
