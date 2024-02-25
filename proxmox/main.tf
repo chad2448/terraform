@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "proxmox" {
-  pm_api_url      = "https://192.168.1.2:8006/api2/json"
+  pm_api_url      = var.pm_api_url
   pm_debug        = true
   pm_user         = var.pm_user
   pm_password     = var.pm_password
@@ -16,17 +16,17 @@ provider "proxmox" {
 }
 
 resource "proxmox_lxc" "debian" {
-    target_node     = "promox"
-    hostname        = "tf-test"
-    ostemplate      = "ProxmoxNFS:vztmpl/debian-12-standard_12.2-1_amd64.tar.zst"
+    target_node     = var.target_node
+    hostname        = var.hostname
+    ostemplate      = var.ostemplate
     password        = var.container_pass
     start           = true
-    tags            = "terraform"
+    tags            = var.tags
     unprivileged    = true
-    nameserver      = "192.168.1.1"
-    ssh_public_keys = <<-EOT
-    ssh-rsa some-keys-hash
-    EOT
+    nameserver      = var.nameserver
+    # ssh_public_keys = <<-EOT
+    # ssh-rsa some-keys-hash
+    # EOT
 
   network {
     name   = "eth0"
