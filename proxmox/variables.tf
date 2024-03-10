@@ -1,22 +1,8 @@
-variable "pm_user" {
-    type = string
-}
-
-variable "pm_password" {
-    type = string
-}
-
-variable "pm_api_url" {
-    type = string
-}
-
-variable "container_pass" {
-    type = string
-}
-
-variable "target_node" {
-    type = string
-}
+variable "pm_user" {}
+variable "pm_password" {}
+variable "pm_api_url" {}
+variable "container_pass" {}
+variable "target_node" {}
 variable "ostemplate" {}
 variable "tags" {}
 variable "nameserver" {}

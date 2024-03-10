@@ -32,7 +32,7 @@ resource "proxmox_lxc" "debian" {
     name   = "eth0"
     bridge = "vmbr0"
     ip     = "dhcp"
-    tag    = 5
+    #tag    = 5
   }
 
   rootfs {
