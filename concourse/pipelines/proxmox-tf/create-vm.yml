@@ -37,11 +37,11 @@ jobs:
   - name: repo
   run:
     path: sh 
-      args:
-      - -cx
-      - |
-        cd repo
-        cat proxmox/main.tf
+    args:
+    - -cx
+    - |
+      cd repo
+      cat proxmox/main.tf
 
 - name: terraform-plan
   plan:
