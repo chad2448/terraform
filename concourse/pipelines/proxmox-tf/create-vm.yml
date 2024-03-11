@@ -15,7 +15,7 @@ resources:
 - name: terraform
   type: terraform
   source:
-  backend_type: local
+    backend_type: local
     backend_config:
       path: proxmox/terraform.tfstate
     vars:
