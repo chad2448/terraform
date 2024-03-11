@@ -16,8 +16,8 @@ resources:
   type: terraform
   source:
   backend_type: local
-  backend_config:
-    path: proxmox/terraform.tfstate
+    backend_config:
+      path: proxmox/terraform.tfstate
     vars:
       pm_api_url: {{pm_api_url}}
       pm_user: {{pm_user}}
