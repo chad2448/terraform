@@ -57,7 +57,7 @@ jobs:
     trigger: false
   - put: terraform
     params:
-      terraform_source: terraform/proxmox
+      terraform_source: repo/terraform/proxmox
       plan_only: true
 
 - name: terraform-apply
