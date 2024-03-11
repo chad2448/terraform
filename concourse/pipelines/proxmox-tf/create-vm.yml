@@ -14,10 +14,10 @@ resources:
 
 - name: terraform
   type: terraform
-  source:
-    backend_type: local
-    # backend_config:
-    #   path: ../../../proxmox/terraform.tfstate
+  #source:
+  #backend_type: local
+  # backend_config:
+  #   path: ../../../proxmox/terraform.tfstate
     vars:
       pm_api_url: {{pm_api_url}}
       pm_user: {{pm_user}}
@@ -30,46 +30,45 @@ resources:
       hostname: {{hostname}}
   
 jobs:
-- name: update-infrastructure
+- name: terraform-plan
   plan:
   - get: repo
+    trigger: false
   - put: terraform
     params:
-      # env_name: e2e
       terraform_source: terraform/proxmox
-  - task: show-outputs
-    config:
-      platform: linux
-      inputs:
-        - name: terraform
-      run:
-        path: /bin/sh
-        args:
-          - -c
-          - |
-              echo "name: $(cat terraform/name)"
-              echo "metadata: $(cat terraform/metadata)"
+      plan_only: true
+
+- name: terraform-apply
+  plan:
+  - get: repo
+    trigger: false
+    passed: [terraform-plan]
+  - get: terraform
+    trigger: false
+    passed: [terraform-plan]
+  - put: terraform
+    params:
+      terraform_source: terraform/proxmox
+      plan_run: false
 
 
 # jobs:
-# - name: terraform-plan
+# - name: update-infrastructure
 #   plan:
 #   - get: repo
-#     trigger: false
-#   - put: terraform
 #     params:
+#       # env_name: e2e
 #       terraform_source: terraform/proxmox
-#       plan_only: true
-
-# - name: terraform-apply
-#   plan:
-#   - get: repo
-#     trigger: false
-#     passed: [terraform-plan]
-#   - get: terraform
-#     trigger: false
-#     passed: [terraform-plan]
-#   - put: terraform
-#     params:
-#       terraform_source: terraform/proxmox
-#       plan_run: false
+#   - task: show-outputs
+#     config:
+#       platform: linux
+#       inputs:
+#         - name: terraform
+#       run:
+#         path: /bin/sh
+#         args:
+#           - -c
+#           - |
+#               echo "name: $(cat terraform/name)"
+#               echo "metadata: $(cat terraform/metadata)"
