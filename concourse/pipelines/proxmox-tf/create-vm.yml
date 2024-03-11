@@ -61,6 +61,10 @@ jobs:
   - task: show-outputs
     config:
       platform: linux
+      image_resource:
+        type: registry-image
+        source: 
+          repository: alpine
       inputs:
       - name: terraform
       run:
