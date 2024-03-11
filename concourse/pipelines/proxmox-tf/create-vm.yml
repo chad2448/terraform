@@ -58,7 +58,7 @@ jobs:
     params:
       env_name: test
       terraform_source: terraform/proxmox
-  - get: terraform
+  - put: terraform
   - task: show-outputs
     config:
       platform: linux
