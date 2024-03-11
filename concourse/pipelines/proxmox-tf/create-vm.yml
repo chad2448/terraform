@@ -55,10 +55,10 @@ jobs:
 - name: update-infrastructure
   plan:
   - get: repo
+  - put: terraform
     params:
       env_name: test
       terraform_source: repo/terraform/proxmox
-  - put: terraform
   - task: show-outputs
     config:
       platform: linux
