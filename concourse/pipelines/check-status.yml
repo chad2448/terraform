@@ -1,0 +1,32 @@
+resources:
+- name: repo
+  type: git
+  source:
+    uri: https://github.com/chads-git-org/concourse-test-repo.git
+    branch: main
+
+jobs:
+- name: check-status
+  plan:
+  - get: repo
+    trigger: true
+  # - set_pipeline: set-with-vars
+  #   file: variables/variables.yml
+  #   var_files:
+  #     - variables/variables.yml
+  - task: check-status-task
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source: 
+          repository: ((repository))
+      inputs:
+      - name: repo
+      run:
+        path: sh 
+        args:
+        - -cx
+        - |
+          cd repo
+          sh check-status.sh
