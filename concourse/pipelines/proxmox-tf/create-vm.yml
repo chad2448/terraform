@@ -57,7 +57,7 @@ jobs:
     trigger: false
   - put: terraform
     params:
-      terraform_source: repo/terraform/proxmox
+      terraform_source: terraform/proxmox
       plan_only: true
 
 - name: terraform-apply
@@ -73,23 +73,21 @@ jobs:
       terraform_source: terraform/proxmox
       plan_run: false
 
-
-# jobs:
-# - name: update-infrastructure
-#   plan:
-#   - get: repo
-#     params:
-#       # env_name: e2e
-#       terraform_source: terraform/proxmox
-#   - task: show-outputs
-#     config:
-#       platform: linux
-#       inputs:
-#         - name: terraform
-#       run:
-#         path: /bin/sh
-#         args:
-#           - -c
-#           - |
-#               echo "name: $(cat terraform/name)"
-#               echo "metadata: $(cat terraform/metadata)"
+- name: update-infrastructure
+  plan:
+  - get: repo
+    params:
+      # env_name: e2e
+      terraform_source: terraform/proxmox
+  - task: show-outputs
+    config:
+      platform: linux
+      inputs:
+        - name: terraform
+      run:
+        path: /bin/sh
+        args:
+          - -c
+          - |
+              echo "name: $(cat terraform/name)"
+              echo "metadata: $(cat terraform/metadata)"
