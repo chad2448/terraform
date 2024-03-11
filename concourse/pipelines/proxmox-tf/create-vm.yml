@@ -76,17 +76,17 @@ jobs:
   plan:
   - get: repo
     params:
-      # env_name: e2e
+      env_name: test
       terraform_source: repo/terraform/proxmox
   - task: show-outputs
     config:
       platform: linux
       inputs:
-        - name: terraform
+      - name: terraform
       run:
         path: /bin/sh
         args:
           - -c
           - |
-              echo "name: $(cat terraform/name)"
-              echo "metadata: $(cat terraform/metadata)"
+            echo "name: $(cat terraform/name)"
+            echo "metadata: $(cat terraform/metadata)"
