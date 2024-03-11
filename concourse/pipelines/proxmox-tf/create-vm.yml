@@ -30,6 +30,7 @@ resources:
       hostname: {{hostname}}
   
 jobs:
+
 - name: check-terra
   plan:
   - get: repo
@@ -51,6 +52,25 @@ jobs:
           cd repo
           cat proxmox/main.tf
 
+- name: update-infrastructure
+  plan:
+  - get: repo
+    params:
+      env_name: test
+      terraform_source: terraform/proxmox
+  - task: show-outputs
+    config:
+      platform: linux
+      inputs:
+      - name: terraform
+      run:
+        path: /bin/sh
+        args:
+        - -c
+        - |
+          echo "name: $(cat terraform/name)"
+          echo "metadata: $(cat terraform/metadata)"
+
 - name: terraform-plan
   plan:
   - get: repo
@@ -71,22 +91,3 @@ jobs:
     params:
       terraform_source: repo/terraform/proxmox
       plan_run: false
-
-- name: update-infrastructure
-  plan:
-  - get: repo
-    params:
-      env_name: test
-      terraform_source: repo/terraform/proxmox
-  - task: show-outputs
-    config:
-      platform: linux
-      inputs:
-      - name: terraform
-      run:
-        path: /bin/sh
-        args:
-          - -c
-          - |
-            echo "name: $(cat terraform/name)"
-            echo "metadata: $(cat terraform/metadata)"
