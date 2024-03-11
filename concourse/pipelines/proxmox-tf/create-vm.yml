@@ -33,15 +33,23 @@ jobs:
 - name: check-terra
   plan:
   - get: repo
-  inputs:
-  - name: repo
-  run:
-    path: sh 
-    args:
-    - -cx
-    - |
-      cd repo
-      cat proxmox/main.tf
+    trigger: false
+  - task: check-terra-task
+    config:
+      platform: linux
+      image_resource:
+        type: registry-image
+        source: 
+          repository: alpine
+      inputs:
+      - name: repo
+      run:
+        path: sh 
+        args:
+        - -cx
+        - |
+          cd repo
+          cat proxmox/main.tf
 
 - name: terraform-plan
   plan:
