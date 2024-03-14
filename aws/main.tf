@@ -1,9 +1,4 @@
 terraform {
-    backend "s3" {
-        bucket = "chad-tf-state"
-        key    = "terraform.tfstate"
-        region = "us-east-1"
-    }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -12,6 +7,6 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = "us-east-1"
+resource "aws_s3_bucket" "terraform-state" {
+  bucket = "chad-tf-state"
 }
