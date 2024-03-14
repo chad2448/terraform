@@ -9,6 +9,12 @@
 .*.lock.hcl
 **/.*.lock.hcl
 
+#Concourse yml
+variables.yml
+**/variable.yml
+
+#backend.tf
+
 # Crash log files
 crash.log
 crash.*.log

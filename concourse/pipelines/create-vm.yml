@@ -3,16 +3,22 @@ resource_types:
   type: docker-image
   source:
     repository: ljfranklin/terraform-resource
-    tag: latest
+    tag: "latest"
 
 resources:
 - name: terraform
   type: terraform
   source:
-    backend_type: local
+    env_name: test
+    backend_type: s3
     backend_config:
-      path: proxmox/terraform.tfstate
+      bucket: ((tf_state_bucket))
+      key: ((tf_state_key))
+      region: us-east-1
+      #access_key: storage_access_key
+      #secret_key: storage_secret_key 
     vars:
+      tag_name: concourse
       pm_api_url: {{pm_api_url}}
       pm_user: {{pm_user}}
       pm_password: {{pm_password}}
@@ -22,6 +28,9 @@ resources:
       tags: {{tags}}
       nameserver: {{nameserver}}
       hostname: {{hostname}}
+    env:
+      AWS_ACCESS_KEY_ID: {{environment_access_key}}
+      AWS_SECRET_ACCESS_KEY: {{environment_secret_key}}
 
 - name: repo
   type: git
@@ -39,10 +48,10 @@ jobs:
   - task: check-terra-task
     config:
       platform: linux
-      image-resource:
+      image_resource:
         type: registry-image
-        source:
-          repository: busybox
+        source: 
+          repository: alpine
       inputs:
       - name: repo
       run:
@@ -51,7 +60,7 @@ jobs:
         - -cx
         - |
           cd repo
-          cat proxmox/main.tf
+          cat aws/main.tf
 
 - name: update-infrastructure
   plan:
@@ -59,10 +68,14 @@ jobs:
   - put: terraform
     params:
       env_name: test
-      terraform_source: repo/terraform
+      terraform_source: repo/terraform/aws
   - task: show-outputs
     config:
       platform: linux
+      image_resource:
+        type: registry-image
+        source: 
+          repository: alpine
       inputs:
       - name: terraform
       run:
